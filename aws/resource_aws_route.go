@@ -75,6 +75,12 @@ func resourceAwsRoute() *schema.Resource {
 				Computed: true,
 			},
 
+			"force_gateway_target": {
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+
 			"egress_only_gateway_id": {
 				Type:     schema.TypeString,
 				Optional: true,
@@ -155,7 +161,9 @@ func resourceAwsRouteCreate(d *schema.ResourceData, meta interface{}) error {
 		}
 	}
 
-	if numTargets > 1 {
+	if len(d.Get("force_gateway_target").(string)) > 0 {
+		setTarget = d.Get("force_gateway_target").(string)
+	} else if numTargets > 1 {
 		return routeTargetValidationError
 	}
 
@@ -366,7 +374,9 @@ func resourceAwsRouteUpdate(d *schema.ResourceData, meta interface{}) error {
 			return routeTargetValidationError
 		}
 	default:
-		if numTargets > 1 {
+		if len(d.Get("force_gateway_target").(string)) > 0 {
+			setTarget = d.Get("force_gateway_target").(string)
+		} else if numTargets > 1 {
 			return routeTargetValidationError
 		}
 	}

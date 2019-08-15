@@ -66,6 +66,7 @@ One of the following target arguments must be supplied:
 * `network_interface_id` - (Optional) Identifier of an EC2 network interface.
 * `transit_gateway_id` - (Optional) Identifier of an EC2 Transit Gateway.
 * `vpc_peering_connection_id` - (Optional) Identifier of a VPC peering connection.
+* `force_gateway_target` - (Optional) Force use of one specific specified gateway when multiple are available
 
 Note that the default route, mapping the VPC's CIDR block to "local", is
 created implicitly and cannot be specified.
